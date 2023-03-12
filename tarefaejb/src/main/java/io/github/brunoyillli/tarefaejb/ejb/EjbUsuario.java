@@ -7,13 +7,16 @@ package io.github.brunoyillli.tarefaejb.ejb;
 import io.github.brunoyillli.tarefaejb.data.model.Operacao;
 import io.github.brunoyillli.tarefaejb.data.model.Usuario;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.ejb.Stateful;
 
 @Stateful
 public class EjbUsuario {
 
-    private ArrayList<Usuario> listUsuarios;
+    private List<Usuario> listUsuarios;
 
     public EjbUsuario() {
         this.listUsuarios = new ArrayList<>();
@@ -23,15 +26,18 @@ public class EjbUsuario {
         if (validar(soma)) {
             Optional<Usuario> usuarioEncontrado = this.findUser(usuario);
             if (usuarioEncontrado.isPresent()) {
-                usuarioEncontrado.get().setPontos(usuarioEncontrado.get().getPontos() + 1);
+                usuarioEncontrado.get()
+                        .setPontos(usuarioEncontrado.get().getPontos() + 1);
             } else {
-                listUsuarios.add(new Usuario(usuario, 1));
+                if (!usuario.isBlank() && !usuario.isEmpty()) {
+                    listUsuarios.add(new Usuario(usuario, 1));
+                }
             }
         }
     }
 
     public void add(String usuario) {
-        if (!usuario.isBlank()) {
+        if (!usuario.isBlank() && !usuario.isEmpty()) {
             Optional<Usuario> usuarioEncontrado = this.findUser(usuario);
             if (usuarioEncontrado.isEmpty()) {
                 listUsuarios.add(new Usuario(usuario, 0));
@@ -40,12 +46,15 @@ public class EjbUsuario {
     }
 
     public Optional<Usuario> findUser(String usuario) {
-        Optional<Usuario> usuarioEncontrado = listUsuarios.stream().filter(user -> user.getNome().equals(usuario)).findAny();
+        Optional<Usuario> usuarioEncontrado = listUsuarios.stream()
+                .filter(user -> user.getNome().equals(usuario)).findAny();
         return usuarioEncontrado;
     }
 
-    public ArrayList<Usuario> getAll() {
-        return listUsuarios;
+    public List<Usuario> getAll() {
+        return listUsuarios.stream()
+                .sorted(Comparator.comparing(Usuario::getPontos).reversed())
+                .collect(Collectors.toList());
     }
 
     public Boolean validar(Operacao soma) {

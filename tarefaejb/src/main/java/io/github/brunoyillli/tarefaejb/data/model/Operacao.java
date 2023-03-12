@@ -4,11 +4,12 @@
  */
 package io.github.brunoyillli.tarefaejb.data.model;
 
+import java.io.Serializable;
 import java.util.Random;
 import lombok.Data;
 
 @Data
-public class Operacao {
+public class Operacao implements Serializable{
     private int number1;
     private int number2;
     private int resultado;

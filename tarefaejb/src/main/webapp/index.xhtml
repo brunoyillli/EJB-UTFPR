@@ -20,7 +20,9 @@
             <h:outputText value=" + " />
             <h:outputText value="#{jsfOperacao.soma.number2}" />
             <h:inputText value="#{jsfOperacao.soma.resultado}" />
-            <h:commandButton value="Verificar" action="#{jsfUsuario.pontuar(jsfUsuario.usuario, jsfOperacao.soma)}" />
+            <h:commandButton value="Verificar" 
+                             action="#{jsfUsuario.pontuar(jsfUsuario.usuario, jsfOperacao.soma)}" 
+                             onclick="#{jsfProdQ.send(jsfUsuario.all, jsfUsuario.usuario)}" />
             <h:commandButton value="Atualizar os Numeros" action="#{jsfOperacao.init()}">
                 <f:ajax render="@all"/>
             </h:commandButton>

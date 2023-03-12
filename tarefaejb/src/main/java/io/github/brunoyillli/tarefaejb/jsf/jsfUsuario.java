@@ -10,7 +10,7 @@ import io.github.brunoyillli.tarefaejb.ejb.EjbUsuario;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +34,7 @@ public class jsfUsuario implements Serializable {
         ejbUsuario.add(usuario);
     }
     
-    public ArrayList<Usuario> getAll() {
+    public List<Usuario> getAll() {
         return ejbUsuario.getAll();
     }
 

@@ -4,6 +4,7 @@
  */
 package io.github.brunoyillli.tarefaejb.data.model;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public class Usuario implements Serializable{
     private String nome;
     private int pontos;
     
